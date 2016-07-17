@@ -23,22 +23,17 @@ import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 import           Text.Blaze.Html.Renderer.Text as T
 
+
 commentsToHTML :: [Comment] -> H.Html
-commentsToHTML comments = H.table $ do
-  H.thead $ do
-    H.tr $ do
-      H.th $ "Name"
-      H.th $ "Comment"
-      H.th $ "Steam ID"
-      H.th $ "Timestamp"
-  H.tbody . mapM_ commentToHTML $ comments
+commentsToHTML comments = H.section H.! A.class_ "comments" $ mapM_ commentToHTML $ comments
   where
     commentToHTML (Comment name content steamId date) =
-      H.tr $ do
-        H.td . H.toHtml $ name
-        H.td . H.toHtml $ content
-        H.td . H.toHtml $ steamId
-        H.td . H.toHtml . show $ date
+      H.article H.! A.class_ "comment" $ do
+        H.header $ do
+          H.span H.! A.class_ "name" $ H.toHtml $ name
+          H.span H.! A.class_ "steamId" $ H.toHtml $ steamId
+          H.span H.! A.class_ "date" $ H.toHtml . show $ date
+        H.p H.! A.class_ "content" $ H.toHtml $ content
 
 defaultWrap :: H.Html -> H.Html
 defaultWrap x = H.docTypeHtml $ do
