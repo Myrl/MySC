@@ -30,5 +30,9 @@ executable heroku-comment
                      , hvect
                      , time
                      , blaze-html
+                     , clay
   other-modules:       DB
+                     , DB.Comments
+                     , DB.Types
                      , HTML
+                     , HTML.Comments

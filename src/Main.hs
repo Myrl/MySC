@@ -68,7 +68,7 @@ commentSystem =
   prehook baseHook $ do
     get root $ do
       allPosts <- fmap (map (entityVal)) . runSQL $ selectList [] [Desc CommentDate]
-      html . T.pack . renderHtml . defaultWrap . commentsToHTML $ allPosts
+      html . T.pack . renderHtml . withStyle defaultStyle . commentsToHTML $ allPosts
     post root $ void $ do
       now <- liftIO $ getCurrentTime
       name <- param' "name"

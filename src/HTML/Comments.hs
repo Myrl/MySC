@@ -21,8 +21,6 @@ import           DB
 
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
-import           Text.Blaze.Html.Renderer.Text as T
-
 
 commentsToHTML :: [Comment] -> H.Html
 commentsToHTML comments = H.section H.! A.class_ "comments" $ mapM_ commentToHTML $ comments
@@ -35,6 +33,3 @@ commentsToHTML comments = H.section H.! A.class_ "comments" $ mapM_ commentToHTM
           H.span H.! A.class_ "date" $ H.toHtml . show $ date
         H.p H.! A.class_ "content" $ H.toHtml $ content
 
-defaultWrap :: H.Html -> H.Html
-defaultWrap x = H.docTypeHtml $ do
-  H.body x

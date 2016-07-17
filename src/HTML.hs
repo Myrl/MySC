@@ -13,6 +13,37 @@
 -- | You should have received a copy of the GNU General Public License
 -- | along with MySC.  If not, see <http://www.gnu.org/licenses/>.
 
-module HTML (module HTML.Comments) where
+{-# LANGUAGE OverloadedStrings #-}
+
+module HTML (module HTML.Comments, withStyle, defaultStyle) where
 
 import           HTML.Comments
+
+import qualified Text.Blaze.Html5 as H
+import qualified Text.Blaze.Html5.Attributes as A
+import           Clay
+
+defaultStyle :: Css
+defaultStyle = do
+  importUrl "https://fonts.googleapis.com/css?family=Inconsolata"
+  ".comment" ? do
+    overflow hidden
+    fontFamily ["Inconsolata"] [monospace]
+    header ? do
+      sym padding (px 2)
+      star <? display inlineBlock
+      ".steamId" <? marginLeft (px 10)
+      ".date" <? float floatRight
+      backgroundColor gray
+    p ? do sym margin (px 0)
+           sym padding (px 2)
+    background lightgray
+    sym borderRadius (px 4)
+  ".comment" |+ ".comment" ? do
+    marginTop (px 10)
+
+withStyle :: Css -> H.Html -> H.Html
+withStyle css html = H.docTypeHtml $ do
+  H.head $ do
+    H.style H.! A.type_ "text/css" $ H.toHtml $ renderWith compact [] css
+  H.body html
