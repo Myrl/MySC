@@ -71,10 +71,8 @@ commentSystem =
       html . T.pack . renderHtml . withStyle defaultStyle . commentsToHTML $ allPosts
     post root $ void $ do
       now <- liftIO $ getCurrentTime
-      name <- param' "name"
-      content <- param' "content"
-      steamId <- param' "steamId"
-      runSQL $ postComment name content steamId now
+      comment@(Comment _ _ _ _ Nothing Nothing) <- jsonBody'
+      runSQL $ insert comment
 
 baseHook :: CommentAction () (HVect '[])
 baseHook = return HNil

@@ -25,7 +25,7 @@ import qualified Text.Blaze.Html5.Attributes as A
 commentsToHTML :: [Comment] -> H.Html
 commentsToHTML comments = H.section H.! A.class_ "comments" $ mapM_ commentToHTML $ comments
   where
-    commentToHTML (Comment name content steamId date) =
+    commentToHTML (Comment name content steamId date _ _) =
       H.article H.! A.class_ "comment" $ do
         H.header $ do
           H.span H.! A.class_ "name" $ H.toHtml $ name
