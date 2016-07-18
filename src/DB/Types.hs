@@ -39,6 +39,8 @@ Comment
     content String
     steamId Int
     date UTCTime
+    replyName String Maybe
+    reply String Maybe
 Mod
     name String
     Name name
