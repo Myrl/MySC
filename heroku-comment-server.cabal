@@ -1,4 +1,4 @@
-name:                heroku-comment
+name:                heroku-comment-server
 version:             0.1.0.0
 synopsis:            Simple project template from stack
 description:         Please see README.md
@@ -12,7 +12,7 @@ category:            Web
 build-type:          Simple
 cabal-version:       >=1.10
 
-executable heroku-comment
+executable heroku-comment-server
   hs-source-dirs:      src
   main-is:             Main.hs
   default-language:    Haskell2010
@@ -31,6 +31,7 @@ executable heroku-comment
                      , time
                      , blaze-html
                      , clay
+                     , aeson
   other-modules:       DB
                      , DB.Comments
                      , DB.Types

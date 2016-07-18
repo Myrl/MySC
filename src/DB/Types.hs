@@ -30,6 +30,8 @@ import           Database.Persist.Postgresql
 import           Database.Persist.TH
 import           Data.ByteString
 import           Data.Time
+import           Data.Aeson
+import           Data.Aeson.TH
 
 share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 Comment
@@ -44,3 +46,5 @@ Mod
 Session
     nonce ByteString
 |]
+
+$(deriveJSON defaultOptions{omitNothingFields = True} ''Comment)
