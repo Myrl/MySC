@@ -33,9 +33,6 @@ import           Database.Persist.Postgresql
 import           Web.Spock
 import           Data.Time
 
-postComment :: String -> String -> Int -> UTCTime -> SqlPersistM CommentId
-postComment name content steamid time = insert $ Comment name content steamid time
-
 runSQL :: (HasSpock m, SpockConn m ~ SqlBackend) => SqlPersistT (NoLoggingT (ResourceT IO)) a -> m a
 runSQL action =
     runQuery $ \conn ->
