@@ -28,8 +28,8 @@ import           Control.Monad.Logger
 import           Database.Persist hiding (get)
 import           Database.Persist.Postgresql hiding (get)
 import           Database.Persist.TH
-import           Web.Spock.Safe hiding (SessionId)
-import           Web.Spock.Shared hiding (SessionId)
+import           Web.Spock hiding (SessionId)
+import           Web.Spock.Config
 import           Data.HVect
 import qualified Data.ByteString as B
 import           Data.Time
@@ -42,10 +42,9 @@ connStr = "host=localhost dbname=comment user=comment password=comment port=5432
 main = do
   pool <- runNoLoggingT $ createPostgresqlPool connStr 5
   runNoLoggingT $ runSqlPool (runMigration migrateAll) pool
-  runSpock 8080 $ spock (spockCfg pool) commentSystem
-  where
-    spockCfg pool = defaultSpockCfg Nothing (PCPool pool) connStr
-    
+  spockCfg <- defaultSpockCfg Nothing (PCPool pool) connStr
+  runSpock 8080 $ spock spockCfg commentSystem
+  
 data BlogState
    = BlogState
    { bs_cfg :: BlogCfg
